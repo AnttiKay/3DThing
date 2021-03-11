@@ -1,4 +1,3 @@
-import java.security.InvalidParameterException;
 
 public class Matrix {
     private double[] matrix;
