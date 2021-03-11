@@ -1,4 +1,4 @@
-
+package app;
 public class Matrix {
     private double[] matrix;
     private int rows; // Dimensions of the matrix
