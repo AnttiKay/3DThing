@@ -1,4 +1,5 @@
 package app;
+
 public class Matrix {
     private double[] matrix;
     private int rows; // Dimensions of the matrix
@@ -13,7 +14,8 @@ public class Matrix {
     public Matrix multiply(Matrix m) {
         int i, j, k;
         double[] outMatrix = new double[rows * m.getColumns()]; // new Matrix size rows x columns
-        if (rows != m.getColumns()) {// if matrixes cannot be multiplied returns null
+
+        if (columns != m.getRows()) {// if matrixes cannot be multiplied returns null
             return null;
         }
         // b = columnK + rowK * columns; // index in a matrix
