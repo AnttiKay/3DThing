@@ -1,7 +1,4 @@
 package app;
-
-import javax.management.relation.RoleResult;
-
 public class Matrix {
     private double[] matrix;
     private int rows; // Dimensions of the matrix

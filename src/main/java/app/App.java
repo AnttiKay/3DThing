@@ -77,19 +77,19 @@ public class App extends Application {
 
 
         Camera camera = new Camera(new double[]{0,0,3}, new double[]{0,0,0});
-        Matrix lookAtMatrix = camera.cameraLookAt(new Matrix(3, 1,new double[]{0,0,3}), new Matrix(3, 1,new double[]{0,0,0}), new Matrix(3, 1,new double[]{0,1,0}));
+        //Matrix lookAtMatrix = camera.cameraLookAt(new Matrix(3, 1,new double[]{0,0,3}), new Matrix(3, 1,new double[]{0,0,0}), new Matrix(3, 1,new double[]{0,1,0}));
         
         PerspectiveMatrix perspective = new PerspectiveMatrix(-0.1, -100, 45);// near and far values
         Matrix perspectiveMatrix = perspective.getPerspectiveMatrix();
 
         Triangle[] triangles = cube.getTriangles();
 
-        for( Triangle t : triangles){
+        /* for( Triangle t : triangles){
             for(Matrix m : t.getAngles()){
                 System.out.println(m.toString());
             }
-        }
-
+        } */
+        final long timeStart = System.currentTimeMillis();
         Timeline renderLoop = new Timeline();
         renderLoop.setCycleCount(Timeline.INDEFINITE);
         KeyFrame kf = new KeyFrame(Duration.seconds(0.017), // 60 fps
@@ -98,7 +98,13 @@ public class App extends Application {
             @Override
             public void handle(ActionEvent event) {
                 gc.clearRect(0, 0, HEIGHT, WIDTH);
+                double tick = (System.currentTimeMillis() - timeStart) / 1000.0; 
 
+                int camRadius = 5;
+                double camX = Math.sin(tick) * camRadius;
+                double camZ = Math.cos(tick) * camRadius;
+                Matrix lookAtMatrix = camera.cameraLookAt(new Matrix(3, 1,new double[]{camX,0,camZ}), new Matrix(3, 1,new double[]{0,0,0}), new Matrix(3, 1,new double[]{0,1,0}));
+                
                 for(Triangle triangle : triangles){
                     double x,y;
                     Triangle t = new Triangle();
@@ -134,7 +140,7 @@ public class App extends Application {
                         }
                         
                     }
-                    // Drawing lines between trianges vertices
+                    // Drawing lines between triangles vertices
                     gc.strokeLine(t.getVertice(0).getX(), t.getVertice(0).getY(), t.getVertice(1).getX(), t.getVertice(1).getY());
                     gc.strokeLine(t.getVertice(1).getX(), t.getVertice(1).getY(), t.getVertice(2).getX(), t.getVertice(2).getY());
                     gc.strokeLine(t.getVertice(2).getX(), t.getVertice(2).getY(), t.getVertice(0).getX(), t.getVertice(0).getY());
@@ -153,26 +159,6 @@ public class App extends Application {
     }
 
     public static void main(String[] args) throws Exception {
-        /*
-         * Transformations t = new Transformations(); Matrix m1 = new Matrix(4, 1);
-         * m1.setMatrix(new double[] { 1, 2, 3, 1 });
-         * 
-         * Matrix m2 = new Matrix(2, 2); m2.setMatrix(new double[] { 4, 3, 2, 1 });
-         * 
-         * Matrix c = m2.substract(m1);
-         * 
-         * System.out.println(c.toString());
-         * 
-         * m1 = new Matrix(4, 4); m1.setMatrix(new double[] { 1, 2, 3, 4, 5, 6, 7, 8, 9,
-         * 10, 11, 12, 13, 14, 15, 16 });
-         * 
-         * m2 = new Matrix(4, 4); m2.setMatrix(new double[] { 16, 15, 14, 13, 12, 11,
-         * 10, 9, 8, 7, 6, 5, 4, 3, 2, 1 });
-         * 
-         * //c = m1.multiply(m2);
-         * 
-         * // System.out.println(c.toString());
-         */
         launch(args);
     }
 
