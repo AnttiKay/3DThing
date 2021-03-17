@@ -1,27 +1,20 @@
 package app;
 
 public class Transformations {
-    private  final Matrix baseTransform = new Matrix(4, 4);
-    private  final Matrix offSetTransform = new Matrix(4, 4);
+    private static final Matrix baseTransform = new Matrix(4, 4,new double[]{   1,0,0,0,
+                                                                                0,1,0,0,
+                                                                                0,0,1,0,
+                                                                                0,0,0,1});
 
-    public Transformations() {
-        offSetTransform.setMatrix(new double[]{ 1,0,0,16,
-                                                0,1,0,16,
-                                                0,0,1,10,
-                                                0,0,0,1}); 
-        baseTransform.setMatrix(new double[]{   1,0,0,0,
-                                                0,1,0,0,
-                                                0,0,1,0,
-                                                0,0,0,1});                                                                  
-    }
 
-    public Matrix applyTranformation(Matrix transformation, Matrix vector) {
+
+    public static Matrix applyTranformation(Matrix transformation, Matrix vector) {
         return transformation.multiply(vector);
     }
 
-    public Matrix offSetTransformation(Matrix offset){
+    public static Matrix offSetTransformation(Matrix offset){
         Matrix m = new Matrix(4, 4);
-        double[] array = offSetTransform.getMatrix().clone();
+        double[] array = baseTransform.getMatrix();
 
 
         array[3] = offset.getMatrix()[0];
@@ -31,9 +24,9 @@ public class Transformations {
 
         return m;
     }
-    public Matrix scaleTransformation(Matrix scale){
+    public static Matrix scaleTransformation(Matrix scale){
         Matrix m = new Matrix(4, 4);
-        double[] array = offSetTransform.getMatrix().clone();
+        double[] array = baseTransform.getMatrix().clone();
         //uniform scaling sx = sy = sz
 
         array[0] = scale.getMatrix()[0];
@@ -43,7 +36,7 @@ public class Transformations {
 
         return m;
     }
-    public Matrix rotateXTransform(double angle){
+    public static Matrix rotateXTransform(double angle){
         Matrix m = new Matrix(4, 4);
         double[] array = baseTransform.getMatrix().clone();
 
@@ -56,7 +49,7 @@ public class Transformations {
         m.setMatrix(array);
         return m;
     }
-    public Matrix rotateYTransform(double angle){
+    public static Matrix rotateYTransform(double angle){
         Matrix m = new Matrix(4, 4);
         double[] array = baseTransform.getMatrix().clone();
 
@@ -69,7 +62,7 @@ public class Transformations {
         m.setMatrix(array);
         return m;
     }
-    public Matrix rotateZTransform(double angle){
+    public static Matrix rotateZTransform(double angle){
         Matrix m = new Matrix(4, 4);
         double[] array = baseTransform.getMatrix().clone();
 
@@ -81,6 +74,10 @@ public class Transformations {
         
         m.setMatrix(array);
         return m;
+    }
+
+    public static double normalize3x1(Matrix m){
+        return Math.sqrt(Math.pow(m.getMatrix()[0], 2)+Math.pow(m.getMatrix()[1], 2)+Math.pow(m.getMatrix()[2], 2));
     }
 
 }

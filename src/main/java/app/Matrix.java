@@ -1,5 +1,7 @@
 package app;
 
+import javax.management.relation.RoleResult;
+
 public class Matrix {
     private double[] matrix;
     private int rows; // Dimensions of the matrix
@@ -9,6 +11,13 @@ public class Matrix {
         this.matrix = new double[rows * columns];
         this.rows = rows;
         this.columns = columns;
+    }
+
+    public Matrix(int rows, int columns, double[] matrix) {
+        this.matrix = new double[rows * columns];
+        this.rows = rows;
+        this.columns = columns;
+        this.matrix = matrix;
     }
 
     public Matrix multiply(Matrix m) {
@@ -38,6 +47,72 @@ public class Matrix {
         return newMatrix;
     }
 
+    public Matrix substract(Matrix m) {
+        double[] outMatrix = new double[rows * columns]; // new Matrix size rows x columns
+
+        if (columns != m.getColumns() || rows != m.getRows()) {// if matrixes cannot be substracted returns null
+            return null;
+        }
+
+        for (int i = 0; i < matrix.length; i++) {
+            outMatrix[i] = matrix[i] - m.getMatrix()[i];
+            // System.out.println(outMatrix[i]);
+
+        }
+        Matrix newMatrix = new Matrix(rows, columns);
+        newMatrix.setMatrix(outMatrix);
+        return newMatrix;
+
+    }
+
+    public Matrix addition(Matrix m) {
+        double[] outMatrix = new double[rows * columns]; // new Matrix size rows x columns
+
+        if (columns != m.getColumns() || rows != m.getRows()) {// if matrixes cannot be added returns null
+            return null;
+        }
+
+        for (int i = 0; i < matrix.length; i++) {
+            outMatrix[i] = matrix[i] + m.getMatrix()[i];
+            // System.out.println(outMatrix[i]);
+
+        }
+        Matrix newMatrix = new Matrix(rows, columns);
+        newMatrix.setMatrix(outMatrix);
+        return newMatrix;
+
+    }
+
+    public Matrix divisionByNumber(double number) {
+        double[] outMatrix = new double[rows * columns]; // new Matrix size rows x columns
+        double scalar = 1 / number;
+        for (int i = 0; i < matrix.length; i++) {
+            outMatrix[i] = scalar * matrix[i];
+            // System.out.println(outMatrix[i]);
+
+        }
+
+        Matrix newMatrix = new Matrix(rows, columns);
+        newMatrix.setMatrix(outMatrix);
+        return newMatrix;
+    }
+
+    public Matrix crossProduct(Matrix m) {
+        double[] outMatrix = new double[rows * columns]; // new Matrix size rows x columns
+
+        // cx = ay*bz − az*by
+        // cy = az*bx − ax*bz
+        // cz = ax*by − ay*bx
+
+        outMatrix[0] = matrix[1] * m.getMatrix()[2] - matrix[2] * m.getMatrix()[1];
+        outMatrix[1] = matrix[2] * m.getMatrix()[0] - matrix[0] * m.getMatrix()[2];
+        outMatrix[2] = matrix[0] * m.getMatrix()[1] - matrix[1] * m.getMatrix()[0];
+
+        Matrix newMatrix = new Matrix(rows, columns);
+        newMatrix.setMatrix(outMatrix);
+        return newMatrix;
+    }
+
     public double[] getMatrix() {
         return matrix;
     }
@@ -52,6 +127,33 @@ public class Matrix {
 
     public int getColumns() {
         return columns;
+    }
+
+    public double getX() {
+        if (columns == 1) {
+            if (rows >= 1) {
+                return matrix[0];
+            }
+        }
+        return 0;
+    }
+
+    public double getY() {
+        if (columns == 1) {
+            if (rows >= 2) {
+                return matrix[1];
+            }
+        }
+        return 0;
+    }
+
+    public double getZ() {
+        if (columns == 1) {
+            if (rows >= 3) {
+                return matrix[2];
+            }
+        }
+        return 0;
     }
 
     public String toString() {
