@@ -7,6 +7,9 @@ import java.util.Arrays;
 
 import org.junit.Test;
 
+import app.dataStructures.Matrix;
+import app.transformations.Transformations;
+
 public class MatrixTest {
        @Test
        public void matrixMultiplicationTest(){
@@ -52,15 +55,6 @@ public class MatrixTest {
         assertEquals(null, m1.substract(m2));
     }
 
-    @Test
-    public void vectorCrossProductTest(){
-        Matrix m1 = new Matrix(3, 1);
-        m1.setMatrix(new double[]{1,2,3});
-
-        Matrix m2 = new Matrix(3, 1);
-        m2.setMatrix(new double[]{1,5,7});
-        
-        assertTrue(Arrays.equals(new double[]{-1,-4,3}, m1.crossProduct(m2).getMatrix()));
-    }
+    
 
 }

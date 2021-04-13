@@ -1,4 +1,4 @@
-package app;
+package app.dataStructures;
 
 public class Entity {
 

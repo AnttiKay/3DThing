@@ -1,5 +1,9 @@
 package app;
 
+import app.dataStructures.*;
+import app.dataStructures.vectors.Vec3;
+import app.transformations.Camera;
+import app.transformations.PerspectiveMatrix;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Application;
@@ -76,7 +80,7 @@ public class App extends Application {
         
 
 
-        Camera camera = new Camera(new double[]{0,0,3}, new double[]{0,0,0});
+        Camera camera = new Camera(new Vec3(0,0,3), new Vec3(0,0,0));
         //Matrix lookAtMatrix = camera.cameraLookAt(new Matrix(3, 1,new double[]{0,0,3}), new Matrix(3, 1,new double[]{0,0,0}), new Matrix(3, 1,new double[]{0,1,0}));
         
         PerspectiveMatrix perspective = new PerspectiveMatrix(-0.1, -100, 45);// near and far values
@@ -103,7 +107,7 @@ public class App extends Application {
                 int camRadius = 5;
                 double camX = Math.sin(tick) * camRadius;
                 double camZ = Math.cos(tick) * camRadius;
-                Matrix lookAtMatrix = camera.cameraLookAt(new Matrix(3, 1,new double[]{camX,0,camZ}), new Matrix(3, 1,new double[]{0,0,0}), new Matrix(3, 1,new double[]{0,1,0}));
+                Matrix lookAtMatrix = camera.cameraLookAt(new Vec3(camX,0,camZ), new Vec3(0,0,0), new Vec3(0,1,0));
                 
                 for(Triangle triangle : triangles){
                     double x,y;

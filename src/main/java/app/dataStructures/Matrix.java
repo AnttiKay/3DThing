@@ -1,6 +1,6 @@
-package app;
+package app.dataStructures;
 public class Matrix {
-    private double[] matrix;
+    protected double[] matrix;
     private int rows; // Dimensions of the matrix
     private int columns;
 
@@ -94,22 +94,6 @@ public class Matrix {
         return newMatrix;
     }
 
-    public Matrix crossProduct(Matrix m) {
-        double[] outMatrix = new double[rows * columns]; // new Matrix size rows x columns
-
-        // cx = ay*bz − az*by
-        // cy = az*bx − ax*bz
-        // cz = ax*by − ay*bx
-
-        outMatrix[0] = matrix[1] * m.getMatrix()[2] - matrix[2] * m.getMatrix()[1];
-        outMatrix[1] = matrix[2] * m.getMatrix()[0] - matrix[0] * m.getMatrix()[2];
-        outMatrix[2] = matrix[0] * m.getMatrix()[1] - matrix[1] * m.getMatrix()[0];
-
-        Matrix newMatrix = new Matrix(rows, columns);
-        newMatrix.setMatrix(outMatrix);
-        return newMatrix;
-    }
-
     public double[] getMatrix() {
         return matrix;
     }
@@ -152,6 +136,44 @@ public class Matrix {
         }
         return 0;
     }
+    public double getW() {
+        if (columns == 1) {
+            if (rows >= 4) {
+                return matrix[3];
+            }
+        }
+        return 0;
+    }
+
+    public void setX(double x) {
+        if (columns == 1) {
+            if (rows >= 1) {
+                matrix[0] = x;
+            }
+        }
+    }
+    public void setY(double y) {
+        if (columns == 1) {
+            if (rows >= 2) {
+                matrix[1] = y;
+            }
+        }
+    }
+    public void setZ(double z) {
+        if (columns == 1) {
+            if (rows >= 3) {
+                matrix[2] = z;
+            }
+        }
+    }
+    public void setW(double w) {
+        if (columns == 1) {
+            if (rows >= 4) {
+                matrix[3] = w;
+            }
+        }
+    }
+
 
     public String toString() {
         StringBuffer sb = new StringBuffer();
@@ -166,6 +188,9 @@ public class Matrix {
             counter++;
         }
         return sb.toString();
+    }
+    public double normalize3x1(){
+        return Math.sqrt(Math.pow(matrix[0], 2)+Math.pow(matrix[1], 2)+Math.pow(matrix[2], 2));
     }
 
 }

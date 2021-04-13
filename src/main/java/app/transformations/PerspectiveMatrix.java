@@ -1,4 +1,6 @@
-package app;
+package app.transformations;
+
+import app.dataStructures.Matrix;
 
 public class PerspectiveMatrix {
     private double near;

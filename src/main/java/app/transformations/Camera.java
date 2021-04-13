@@ -1,38 +1,49 @@
-package app;
+package app.transformations;
+
+import app.dataStructures.Matrix;
+import app.dataStructures.vectors.Vec3;
 
 public class Camera {
 
-    private Matrix cameraPosition = new Matrix(3, 1);
-    private Matrix cameraTarget = new Matrix(3, 1);
+    private Vec3 cameraPosition = new Vec3();
+    private Vec3 cameraTarget = new Vec3();
 
-    public Camera(double[] cameraPosition, double[] cameraTarget) {
-        this.cameraPosition.setMatrix(cameraPosition);
-        this.cameraTarget.setMatrix(cameraTarget);
+    public Camera(Vec3 cameraPosition, Vec3 cameraTarget) {
+        this.cameraPosition = cameraPosition;
+        this.cameraTarget = cameraTarget;
     }
 
-    public Matrix getCameraDirection() {
+    public Vec3 getCameraDirection() {
         // |a| == magnitude of a vector
         // |a| = √( x2 + y2 )
 
         Matrix direction = cameraTarget.substract(cameraPosition);
-        double vectorMagnitude = Math.sqrt(Math.pow(direction.getMatrix()[0], 2) + Math.pow(direction.getMatrix()[1], 2)
-                + Math.pow(direction.getMatrix()[2], 2));
-        return direction.divisionByNumber(vectorMagnitude);
+        Matrix NormalizedCameraDirection = direction.divisionByNumber(direction.normalize3x1());
+
+        Vec3 result = new Vec3(NormalizedCameraDirection.getMatrix());
+        //System.out.println(result.toString());
+        
+        return result;
     }
 
-    public Matrix getCameraRight(Matrix up) {
+    public Vec3 getCameraRight(Vec3 up) {
         //cameraUp = crossProduct / |crossProduct|
         // |a| = a vectors length
 
-        Matrix crossProduct = up.crossProduct(getCameraDirection());
-        return crossProduct.divisionByNumber(Transformations.normalize3x1(crossProduct));
+        Vec3 crossProduct = up.crossProduct(getCameraDirection());
+        Matrix normalizedCameraRight = crossProduct.divisionByNumber(crossProduct.normalize());
+
+        Vec3 result = new Vec3(normalizedCameraRight.getMatrix());
+
+        //System.out.println(result.toString());
+        return result;
     }
 
-    public Matrix getCameraUp(Matrix up){
+    public Vec3 getCameraUp(Vec3 up){
         return  getCameraDirection().crossProduct(getCameraRight(up));
     }
 
-    public Matrix cameraLookAt(Matrix cameraPosition, Matrix cameraTarget, Matrix upDirection){
+    public Matrix cameraLookAt(Vec3 cameraPosition, Vec3 cameraTarget, Vec3 upDirection){
         this.cameraPosition = cameraPosition;
         this.cameraTarget = cameraTarget;
         double[] cameraLocation = cameraPosition.getMatrix();

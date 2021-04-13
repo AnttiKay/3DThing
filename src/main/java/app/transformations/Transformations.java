@@ -1,4 +1,6 @@
-package app;
+package app.transformations;
+
+import app.dataStructures.Matrix;
 
 public class Transformations {
     private static final Matrix baseTransform = new Matrix(4, 4,new double[]{   1,0,0,0,
