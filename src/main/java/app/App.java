@@ -77,9 +77,10 @@ public class App extends Application {
             -0.5,0.5,0.5,
             -0.5,0.5,-0.5});
 
+        //angles of pitch, yaw and roll 
         
 
-        Vec3 cameraFront = new Vec3(0,0,-1);
+
         Camera camera = new Camera(new Vec3(0,0,3), new Vec3(0,0,0));
         //Matrix lookAtMatrix = camera.cameraLookAt(new Matrix(3, 1,new double[]{0,0,3}), new Matrix(3, 1,new double[]{0,0,0}), new Matrix(3, 1,new double[]{0,1,0}));
         
@@ -112,10 +113,10 @@ public class App extends Application {
                 long currentFrame = System.currentTimeMillis();
                 deltaTime = currentFrame - lastFrame;
                 lastFrame = currentFrame;
-                System.out.println("delta: "+deltaTime);
+                //System.out.println("delta: "+deltaTime);
 
 
-                Matrix lookAtMatrix = camera.cameraLookAt(camera.getCameraPosition(), new Vec3(camera.getCameraPosition().addition(cameraFront)), new Vec3(0,1,0));
+                Matrix lookAtMatrix = camera.cameraLookAt(camera.getCameraPosition(), new Vec3(camera.getCameraPosition().addition(camera.getCameraFront())), new Vec3(0,1,0));
                 keyEventHandler.handleKeyPresses(deltaTime);
 
                 for(Triangle triangle : triangles){
