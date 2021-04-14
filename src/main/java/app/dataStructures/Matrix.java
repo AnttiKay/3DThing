@@ -93,6 +93,19 @@ public class Matrix {
         newMatrix.setMatrix(outMatrix);
         return newMatrix;
     }
+    public Matrix multiplicationByNumber(double number) {
+        double[] outMatrix = new double[rows * columns]; // new Matrix size rows x columns
+        double scalar = number;
+        for (int i = 0; i < matrix.length; i++) {
+            outMatrix[i] = scalar * matrix[i];
+            // System.out.println(outMatrix[i]);
+
+        }
+
+        Matrix newMatrix = new Matrix(rows, columns);
+        newMatrix.setMatrix(outMatrix);
+        return newMatrix;
+    }
 
     public double[] getMatrix() {
         return matrix;

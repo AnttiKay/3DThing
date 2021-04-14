@@ -2,6 +2,8 @@ package app.dataStructures.vectors;
 
 import java.security.InvalidParameterException;
 
+import app.dataStructures.Matrix;
+
 public class Vec3 extends AbstractVector {
 
     public Vec3() {
@@ -18,6 +20,14 @@ public class Vec3 extends AbstractVector {
         super(3, 1);
         if (vector3.length == 3) {
             super.setMatrix(vector3);
+        } else
+            throw new InvalidParameterException();
+    }
+    public Vec3(Matrix m) {
+        super(3, 1);
+        double[] matrix = m.getMatrix();
+        if (matrix.length == 3) {
+            super.setMatrix(matrix);
         } else
             throw new InvalidParameterException();
     }

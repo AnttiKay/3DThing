@@ -5,8 +5,15 @@ import app.dataStructures.vectors.Vec3;
 
 public class Camera {
 
+    private final double cameraSpeed = 0.0025;
+
     private Vec3 cameraPosition = new Vec3();
     private Vec3 cameraTarget = new Vec3();
+    private Vec3 normalizedCameraDirection = new Vec3();
+    private Vec3 normalizedCameraRight = new Vec3();
+    private Vec3 normalizedCameraUp = new Vec3();
+
+
 
     public Camera(Vec3 cameraPosition, Vec3 cameraTarget) {
         this.cameraPosition = cameraPosition;
@@ -22,7 +29,7 @@ public class Camera {
 
         Vec3 result = new Vec3(NormalizedCameraDirection.getMatrix());
         //System.out.println(result.toString());
-        
+        this.normalizedCameraDirection = result;
         return result;
     }
 
@@ -36,11 +43,14 @@ public class Camera {
         Vec3 result = new Vec3(normalizedCameraRight.getMatrix());
 
         //System.out.println(result.toString());
+        this.normalizedCameraRight = result;
         return result;
     }
 
     public Vec3 getCameraUp(Vec3 up){
-        return  getCameraDirection().crossProduct(getCameraRight(up));
+        Vec3 result = getCameraDirection().crossProduct(getCameraRight(up));
+        this.normalizedCameraUp = result;
+        return  result;
     }
 
     public Matrix cameraLookAt(Vec3 cameraPosition, Vec3 cameraTarget, Vec3 upDirection){
@@ -66,5 +76,26 @@ public class Camera {
         
         return Transformations.applyTranformation(lookMatrix, cameraLocationTransform);
     }
+    public Vec3 getCameraPosition() {
+        return cameraPosition;
+    }
+    public void setCameraPosition(Vec3 cameraPosition) {
+        this.cameraPosition = cameraPosition;
+    }
+    public void setCameraPosition(Matrix cameraPosition) {
 
+        this.cameraPosition = new Vec3(cameraPosition.getMatrix());
+    }
+    public double getCameraSpeed() {
+        return cameraSpeed;
+    }
+    public Vec3 getNormalizedCameraDirection() {
+        return normalizedCameraDirection;
+    }
+    public Vec3 getNormalizedCameraUp() {
+        return normalizedCameraUp;
+    }
+    public Vec3 getNormalizedCameraRight() {
+        return normalizedCameraRight;
+    }
 }

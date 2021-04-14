@@ -54,7 +54,16 @@ public class MatrixTest {
         
         assertEquals(null, m1.substract(m2));
     }
+    @Test
+    public void matrixMultiplicationByNumberTest(){
+        Matrix m1 = new Matrix(3, 1);
+        m1.setMatrix(new double[]{3,4,5});
 
+        double multiplier = 2;
+        //System.out.println(m1.multiplicationByNumber(multiplier).toString());
+        
+        assertTrue(Arrays.equals(new double[]{6,8,10}, m1.multiplicationByNumber(multiplier).getMatrix()));
+    }
     
 
 }

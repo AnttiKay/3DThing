@@ -79,7 +79,7 @@ public class App extends Application {
 
         
 
-
+        Vec3 cameraFront = new Vec3(0,0,-1);
         Camera camera = new Camera(new Vec3(0,0,3), new Vec3(0,0,0));
         //Matrix lookAtMatrix = camera.cameraLookAt(new Matrix(3, 1,new double[]{0,0,3}), new Matrix(3, 1,new double[]{0,0,0}), new Matrix(3, 1,new double[]{0,1,0}));
         
@@ -93,22 +93,31 @@ public class App extends Application {
                 System.out.println(m.toString());
             }
         } */
+        KeyEventHandler keyEventHandler = new KeyEventHandler(scene, camera);
+
         final long timeStart = System.currentTimeMillis();
+        
+
         Timeline renderLoop = new Timeline();
         renderLoop.setCycleCount(Timeline.INDEFINITE);
         KeyFrame kf = new KeyFrame(Duration.seconds(0.017), // 60 fps
         new EventHandler<ActionEvent>(){
+            long deltaTime = 0;
+            long lastFrame = 0;
 
             @Override
             public void handle(ActionEvent event) {
                 gc.clearRect(0, 0, HEIGHT, WIDTH);
-                double tick = (System.currentTimeMillis() - timeStart) / 1000.0; 
 
-                int camRadius = 5;
-                double camX = Math.sin(tick) * camRadius;
-                double camZ = Math.cos(tick) * camRadius;
-                Matrix lookAtMatrix = camera.cameraLookAt(new Vec3(camX,0,camZ), new Vec3(0,0,0), new Vec3(0,1,0));
-                
+                long currentFrame = System.currentTimeMillis();
+                deltaTime = currentFrame - lastFrame;
+                lastFrame = currentFrame;
+                System.out.println("delta: "+deltaTime);
+
+
+                Matrix lookAtMatrix = camera.cameraLookAt(camera.getCameraPosition(), new Vec3(camera.getCameraPosition().addition(cameraFront)), new Vec3(0,1,0));
+                keyEventHandler.handleKeyPresses(deltaTime);
+
                 for(Triangle triangle : triangles){
                     double x,y;
                     Triangle t = new Triangle();
