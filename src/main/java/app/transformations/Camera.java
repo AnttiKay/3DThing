@@ -1,7 +1,5 @@
 package app.transformations;
 
-import java.util.Set;
-
 import app.dataStructures.Matrix;
 import app.dataStructures.vectors.Vec3;
 

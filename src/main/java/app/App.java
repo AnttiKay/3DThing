@@ -96,7 +96,7 @@ public class App extends Application {
         } */
         KeyEventHandler keyEventHandler = new KeyEventHandler(scene, camera);
 
-        final long timeStart = System.currentTimeMillis();
+        //final long timeStart = System.currentTimeMillis();
         
 
         Timeline renderLoop = new Timeline();

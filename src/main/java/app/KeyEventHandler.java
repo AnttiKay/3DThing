@@ -4,11 +4,9 @@ import java.util.ArrayList;
 
 import app.dataStructures.vectors.Vec3;
 import app.transformations.Camera;
-import javafx.application.Platform;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.robot.Robot;
 
 public class KeyEventHandler {
@@ -19,9 +17,7 @@ public class KeyEventHandler {
     private double lastXDelta, lastYDelta;
     private double xposDelta, yposDelta;
     private final double mouseSensitivity = 0.1;
-    private boolean firstMouseEvent = true;
     private boolean ignoreMouseEvent = false;
-    private Robot mouseMover = new Robot();
     private int mouseDeltaX, mouseDeltaY;
 
     public KeyEventHandler(Scene s, Camera c) {
